@@ -43,6 +43,7 @@ def reduce_on_plateau(
     rtol: float = 1e-4,
     atol: float = 0.0,
     cooldown: int = 0,
+    end_value: float = 0.0,
 ) -> base.GradientTransformationExtraArgs:
   """Reduce learning rate when a metric has stopped improving.
 
@@ -120,7 +121,7 @@ def reduce_on_plateau(
           curr_plateau_count == patience, 0, curr_plateau_count
       )
       new_lr = jnp.where(
-          curr_plateau_count == patience,
+          curr_plateau_count == patience and state.lr * factor > end_value,
           state.lr * factor,
           state.lr,
       )

@@ -121,7 +121,7 @@ def reduce_on_plateau(
           curr_plateau_count == patience, 0, curr_plateau_count
       )
       new_lr = jnp.where(
-          curr_plateau_count == patience and state.lr * factor > end_value,
+          jnp.logical_and(curr_plateau_count == patience, state.lr * factor > end_value),
           state.lr * factor,
           state.lr,
       )

@@ -162,7 +162,7 @@ class ReduceLROnPlateauTest(parameterized.TestCase):
     # Wait until patience runs out
     for _ in range(self.patience + 1):
       updates, state = self.transform.update(
-          updates=self.updates, state=state, value=0.1,
+          updates=self.updates, state=state, value=jnp.asarray(0.1, dtype=float),
       )
 
     # Check that learning rate is not reduced
